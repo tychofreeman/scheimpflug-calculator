@@ -1,4 +1,11 @@
 version: 0.0
+
+
+env:
+  parameter-store:
+    LAMBDA_FUNCTION_NAME: /cfreeman_lab_4_5_3_function_name
+
+
 Resources:
   - myLambdaFunction:
       Type: AWS::Lambda::Function
