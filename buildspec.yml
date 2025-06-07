@@ -36,9 +36,7 @@ phases:
   post_build:
     commands:
       - echo "Updating Lambda function..."
-      - pwd
-      - ls ./ ../
-      - aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --zip-file fileb://function.zip
+      - aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --zip-file fileb://../function.zip
       - ls function.zip
       - echo "Build completed on `date`"
 
