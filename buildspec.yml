@@ -26,11 +26,13 @@ phases:
       - cd dist-lambda
       - npm install --production
       - zip -r ../function.zip ./*
+      - ls * ../function.zip ../appspec.yml
 
   post_build:
     commands:
       - echo "Updating Lambda function..."
       - aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --zip-file file://function.zip
+      - ls function.zip
       - echo "Build completed on `date`"
 
 artifacts:
