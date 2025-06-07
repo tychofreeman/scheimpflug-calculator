@@ -10,9 +10,9 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies..."
-      - npm install
+      - npm ci
       - echo "Running tests..."
-      - npm test || true
+      - npm test
 
   build:
     commands:
