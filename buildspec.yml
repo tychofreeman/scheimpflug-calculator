@@ -26,8 +26,10 @@ phases:
       - cp -r static dist-lambda/
       - cp server.ts dist-lambda/
       - cp package.json dist-lambda/
+      - cp package-lock.json dist-lambda/
       - cd dist-lambda
       - npm ci --production
+      - rm ./package-lock.json
       - zip -r ../function.zip ./*
       - ls * ../function.zip ../appspec.yml
 
