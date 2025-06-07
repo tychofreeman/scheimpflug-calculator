@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  parameter-store:
+    LAMBDA_FUNCTION_NAME: /cfreeman_lab_4_5_3_function_name
+
 phases:
   install:
     runtime-versions:
@@ -11,9 +15,6 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - npm ci
-      - echo "Retrieving parameters from Parameter Store..."
-      - export LAMBDA_FUNCTION_NAME=$(aws ssm get-parameter --name "/cfreeman_lab_4_5_3_function_name" --query "Parameter.Value" --output text)
-      - echo "Running tests..."
       - npm test
 
   build:
@@ -26,7 +27,7 @@ phases:
       - cp server.ts dist-lambda/
       - cp package.json dist-lambda/
       - cd dist-lambda
-      - npm install --production
+      - npm ci --production
       - zip -r ../function.zip ./*
       - ls * ../function.zip ../appspec.yml
 
