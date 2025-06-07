@@ -11,6 +11,8 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - npm ci
+      - echo "Retrieving parameters from Parameter Store..."
+      - export LAMBDA_FUNCTION_NAME=$(aws ssm get-parameter --name "/cfreeman_lab_4_5_3_function_name" --query "Parameter.Value" --output text)
       - echo "Running tests..."
       - npm test
 
