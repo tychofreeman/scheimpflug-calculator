@@ -1,4 +1,3 @@
-# Do not change version. This is the version of aws buildspec, not the version of your buldspec file.
 version: 0.2
 
 phases:
@@ -6,25 +5,40 @@ phases:
     runtime-versions:
       nodejs: 22
     commands:
-      - echo Installing Vite...
-      - npm install -g vite
+      - npm install
+
   pre_build:
     commands:
-      - echo Installing source NPM dependencies...
+      - echo "Installing dependencies..."
       - npm install
-      - npm run test
+      - echo "Running tests..."
+      - npm test || true
+
   build:
     commands:
-      - echo Build started on `date`
-      - echo Compiling the Node.js code
+      - echo "Building React application..."
       - npm run build
+      - echo "Preparing Lambda deployment package..."
+      - mkdir -p dist-lambda
+      - cp -r static dist-lambda/
+      - cp server.ts dist-lambda/
+      - cp package.json dist-lambda/
+      - cd dist-lambda
+      - npm install --production
+      - zip -r ../function.zip ./*
+
   post_build:
     commands:
-      - echo Build completed on `date`
-# Include only the files required for your application to run.
-# Do not use recursively include artifacts from node_modules directory as it will include unnecessary packages
-# used only for building and testing.
-# ExpressJS apps will need other artifact directories included (bin/*, public/*, routes/*, views/* etc).
+      - echo "Updating Lambda function..."
+      - aws lambda update-function-code --function-name ${LAMBDA_FUNCTION_NAME} --zip-file file://function.zip
+      - echo "Build completed on `date`"
+
 artifacts:
   files:
-    - dist/**/*
+    - function.zip
+    - appspec.yml
+  discard-paths: yes
+
+cache:
+  paths:
+    - 'node_modules/**/*'

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
@@ -22,6 +22,7 @@
   },
   "include": [
     "src",
+    "server.ts",
     "node_modules/vitest/globals.d.ts",
     "node_modules/vitest/globals.d.ts"
   ]
