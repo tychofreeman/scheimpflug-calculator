@@ -29,6 +29,9 @@ phases:
       - cp package.json dist-lambda/
       - cp package-lock.json dist-lambda/
       - cd dist-lambda
+      - echo "================== Listing dist-lambda =================="
+      - ls
+      - echo "================== End of dist-lambda listing =================="
       - npm ci --production
       - rm ./package-lock.json
       - zip -r ../function.zip ./*
