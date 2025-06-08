@@ -26,7 +26,6 @@ phases:
       - cp -r static dist-lambda/
       - npx tsc --project tsconfig.server.json
       - echo "export { handler } from './server.js';" > dist-lambda/index.js
-      - cp server.js dist-lambda/
       - cp package.json dist-lambda/
       - cp package-lock.json dist-lambda/
       - cd dist-lambda
