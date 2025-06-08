@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import serverless from 'serverless-http';
 
 // Get the directory name for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +25,12 @@ app.use((_req, res) => {
   res.sendFile(staticFile('index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Export the serverless handler for AWS Lambda
+export const handler = serverless(app);
+
+// Only start the server if not running in Lambda
+if (!process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
