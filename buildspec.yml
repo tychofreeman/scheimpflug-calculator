@@ -24,6 +24,7 @@ phases:
       - echo "Preparing Lambda deployment package..."
       - mkdir -p dist-lambda
       - cp -r static dist-lambda/
+      - echo "export { handler } from './server.js';" > dist-lambda/index.js
       - cp server.ts dist-lambda/
       - cp package.json dist-lambda/
       - cp package-lock.json dist-lambda/
