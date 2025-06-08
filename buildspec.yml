@@ -34,6 +34,7 @@ phases:
       - echo "================== End of dist-lambda listing =================="
       - npm ci --production
       - rm ./package-lock.json
+      - cat server.js
       - zip -r ../function.zip ./*
 
   post_build:
